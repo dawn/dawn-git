@@ -1,4 +1,4 @@
-require "dawn/git/controllers/base"
+require "dawn/git/controllers/base_controller"
 
 module Dawn
   module Git
@@ -12,6 +12,7 @@ module Dawn
       ###
       # @param [String] username
       def all_from_user
+        #
       end
 
       ###
@@ -39,7 +40,8 @@ module Dawn
       # @param [String] username
       # @param [String] reponame
       def build
-        #
+        username = params[:username]
+        reponame = params[:reponame]
       end
 
       ###
