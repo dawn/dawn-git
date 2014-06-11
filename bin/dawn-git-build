@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+# dawn-git-build
+require "io/wait"
+require "docker-api"
+require 'tempfile'
+
+@log = STDOUT
+
+
+argv = ARGV.dup
+
+abort "USAGE: dawn-git-build <username> <reponame>" if argv.size < 2
+
+if STDIN.ready?
+  data = STDIN.read
+  env = JSON.load(data) rescue {}
+else
+  env = {}
+end
+
+username = argv.shift
+reponame = argv.shift
+
+image_name = "#{username.downcase}/#{reponame}"
+repo_path = "#{Dir.home("git")}/repositories/#{image_name}.git"
+name = reponame
+
+
+buildstep = Docker::Container.create({
+  'Image'     => 'dawn/buildstep',
+  'Cmd'       => ['/bin/bash', '-c', 'mkdir -p /app && tar -xC /app && /build/builder'],
+  'Env'       => env.map { |k,v| "#{k}=#{v}" },
+  'OpenStdin' => true,
+  'StdinOnce' => true
+}, Docker::Connection.new('unix:///var/run/docker.sock', {:chunk_size => 1})) # tempfix for streaming
+
+Tempfile.open(name) do |tarball| # use a tempfile to not store in memory
+  pid = spawn("git archive #{git_ref}", :out => tarball, chdir: repo_path)
+  Process.wait(pid)
+
+  buildstep.tap(&:start).attach(stdin: tarball) do |stream, chunk|
+    # \e[1G gets rid of that pesky 'remote:' text, skip empty lines
+    @log.puts "\e[1G#{chunk}" if chunk != "\n"
+  end
+
+  if buildstep.wait['StatusCode'] == 0
+    buildstep.commit(repo: image_name)
+  else
+    raise "Buildstep returned a non-zero exit code."
+  end
+end
+
+# .. tag the current image commit with version (user/image:v3, etc., the ':v3' part)
+# `docker tag #{self.image} `
+
+# clean up
+begin
+  buildstep.kill.delete force: true
+rescue Docker::Error::NotFoundError
+end
