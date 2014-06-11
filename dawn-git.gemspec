@@ -17,6 +17,8 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.authors     = ['Blaž Hrastnik', 'Corey Powell']
 
+  s.add_runtime_dependency 'sshkey',       '~> 0.9'
+  s.add_runtime_dependency 'excon',       '~> 0.9'
   s.add_runtime_dependency 'sinatra',       '~> 0.9'
 
   s.executables = 'dawn-git-server'
