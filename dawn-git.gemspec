@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
 
   s.executables = 'dawn-git-server'
   s.require_path = 'lib'
-  s.files = Dir.glob('lib/**/*') +
+  s.files = ["README.md", "CHANGELOG.md"] +
+            Dir.glob('lib/**/*') +
             Dir.glob('bin/**/*')
 end
