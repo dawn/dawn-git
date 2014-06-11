@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'sinatra',       '~> 0.9'
 
-  s.executables = 'dawn-git'
+  s.executables = 'dawn-git-server'
   s.require_path = 'lib'
   s.files = Dir.glob('lib/**/*') +
             Dir.glob('bin/**/*')

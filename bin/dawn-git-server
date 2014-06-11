@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
-require "dawn/git"
+# dawn-git-server
+require "dawn/git/server"
 
 config = {
   port: 4567
