@@ -115,7 +115,7 @@ module Dawn
         username = params[:username]
         reponame = params[:reponame]
 
-        controller.call :delete_repo, username: username, reponame: reponame
+        controller.call :destroy, username: username, reponame: reponame
       end
 
       ###
@@ -149,7 +149,7 @@ module Dawn
 
         id = params[:id]
 
-        controller.call :delete, id: id
+        controller.call :destroy, id: id
       end
 
     end

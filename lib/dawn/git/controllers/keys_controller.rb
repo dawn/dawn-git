@@ -8,7 +8,7 @@ module Dawn
         key = params[:key]
       end
 
-      def delete
+      def destroy
         key = params[:key]
       end
 

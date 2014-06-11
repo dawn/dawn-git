@@ -45,7 +45,7 @@ module Dawn
       ###
       # @param [String] username
       # @param [String] reponame
-      def delete_repo
+      def destroy
         #
       end
 
