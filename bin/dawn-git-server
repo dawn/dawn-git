@@ -1,9 +1,19 @@
 #!/usr/bin/env ruby
 # dawn-git-server
+require "optparse"
 require "dawn/git/server"
+require "yaml"
 
 config = {
   port: 4567
 }
+
+OptionParser.new do |opts|
+  opts.on "-c", "--config-file CONFIGFILE", "Specify and configuration file" do |config_file|
+    data = YAML.load_file config_file
+    config[:port] = data["port"] if data.key?("port")
+  end
+end.parse!
+
 
 Dawn::Git::Server.run! port: config[:port]
