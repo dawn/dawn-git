@@ -11,3 +11,23 @@ Dawn remote repository management server
 ```shell
 gem install dawn-git
 ```
+
+## Usage
+### Server
+```shell
+dawn-git-server --config-file my_config.yml
+```
+
+### Client API
+```ruby
+# NOTE: this will load the dawn/git/api
+# not the dawn/git/server
+require "dawn/git"
+
+# if you're lazy like me
+include Dawn::Git::Api
+
+Repos.all #=> list of all repos on the git server
+Repos.create username: "IceDragon", password: "CookieCrusher"
+
+```
