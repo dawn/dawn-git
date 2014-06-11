@@ -4,7 +4,8 @@ Dawn-Git
 [![Gem Version](https://badge.fury.io/rb/dawn-git.svg)](http://badge.fury.io/rb/dawn-git)
 [![Code Climate](https://codeclimate.com/github/dawn/dawn-git.png)](https://codeclimate.com/github/dawn/dawn-git)
 
-[Dawn](https://github.com/dawn/dawn) git repo management API
+Dawn remote repository management server
+[Dawn](https://github.com/dawn/dawn)
 
 ## Installation
 ```shell
