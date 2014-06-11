@@ -28,6 +28,6 @@ require "dawn/git"
 include Dawn::Git::Api
 
 Repos.all #=> list of all repos on the git server
-Repos.create username: "IceDragon", password: "CookieCrusher"
+Repos.create username: "IceDragon", reponame: "CookieCrusher"
 
 ```
