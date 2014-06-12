@@ -2,16 +2,18 @@
 # dawn-git-server
 require "optparse"
 require "dawn/git/server"
+require "dawn/git/config"
 require "yaml"
 
-config = {
-  port: 4567
-}
+config = Dawn::Git.config
+config.port = 4567
+config.repo_user = "git"
 
 OptionParser.new do |opts|
   opts.on "-c", "--config-file CONFIGFILE", "Specify and configuration file" do |config_file|
     data = YAML.load_file config_file
-    config[:port] = data["port"] if data.key?("port")
+    config.port = data["port"] if data.key?("port")
+    config.repo_user = data["repo_user"] if data.key?("repo_user")
   end
 end.parse!
 
