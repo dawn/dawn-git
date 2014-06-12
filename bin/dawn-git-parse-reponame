@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+# dawn-git-parse-reponame
+#   USAGE: dawn-git-parse-reponame <reponame> [<filter>]
+#   filter:
+#     user, username - filter username
+#     repo, reponame - filter reponame
+regex = /(?<username>[a-z][a-z\d-]+)\/(?<repo>[a-z][a-z\d-]+)\.git/
+
+if ARGV.empty?
+  puts "USAGE: dawn-git-parse-reponame <reponame> [<filter>]"
+else
+  argv = ARGV.dup
+  reponame = argv.shift
+
+  if mt = reponame.match(regex)
+    filter = argv.shift
+    if filter == "username" || filter == "user"
+      STDOUT.puts mt[:username]
+    elsif filter == "reponame" || filter == "repo"
+      STDOUT.puts mt[:repo]
+    else
+      STDOUT.puts [mt[:username],mt[:repo]].join(",")
+    end
+  else
+    abort "reponame is invalid"
+  end
+end
