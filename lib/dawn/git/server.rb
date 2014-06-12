@@ -7,6 +7,10 @@ module Dawn
     class Server < Sinatra::Base
 
       helpers do
+        def force_json
+          pass unless request.accept? 'application/json'
+        end
+
         def act(controller, name)
           controller.action(name).call request, response, params
         end
@@ -43,6 +47,7 @@ module Dawn
       # @param [String] reponame
       #   Creates a new repo
       post '/repos' do
+        force_json
         act ReposController, :create
       end
 
@@ -52,6 +57,7 @@ module Dawn
       # @param [String] reponame
       #   Creates a new repo
       post '/repos/:username' do
+        force_json
         act ReposController, :create
       end
 
@@ -59,6 +65,7 @@ module Dawn
       # POST /repos/:username/:reponame
       #   Update repo
       post '/repos/:username/:reponame' do
+        force_json
         act ReposController, :update
       end
 
@@ -66,11 +73,13 @@ module Dawn
       # POST /repos/:username/:reponame/build
       #   Initiate build process on repo
       post '/repos/:username/:reponame/build' do
+        force_json
         act ReposController, :build
       end
 
       ###
       # DELETE /repos/:username/:reponame
+      #   Remove repo
       delete '/repos/:username/:reponame' do
         act ReposController, :destroy
       end
@@ -87,6 +96,7 @@ module Dawn
       #   Add new sshkey to known hosts
       # @param [String] key
       post '/keys' do
+        force_json
         act KeysController, :create
       end
 
