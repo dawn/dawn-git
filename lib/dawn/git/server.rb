@@ -89,9 +89,10 @@ module Dawn
       end
 
       ###
-      # DELETE /keys/:id
-      #   Remove key
-      delete '/keys/:id' do
+      # DELETE /keys
+      #   Remove sshkey from known hosts
+      # @param [String] key
+      delete '/keys' do
         act KeysController, :destroy
       end
 

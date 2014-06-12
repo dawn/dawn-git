@@ -5,6 +5,8 @@ module Dawn
   module Git
     class KeysController < BaseController
 
+      ###
+      # GET /keys
       def all
         status 200
         json keys: Keyring.keys
@@ -30,6 +32,8 @@ module Dawn
         end
       end
 
+      ###
+      # DELETE /keys?key=sshkey
       def destroy
         key = params[:key]
 
