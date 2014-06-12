@@ -64,7 +64,7 @@ module Dawn
 
       ###
       # POST /repos/:username/:reponame/build
-      #
+      #   Initiate build process on repo
       post '/repos/:username/:reponame/build' do
         act ReposController, :build
       end
@@ -77,12 +77,14 @@ module Dawn
 
       ###
       # GET /keys
+      #   Retrieve all known hosts sshkeys
       get '/keys' do
         act KeysController, :all
       end
 
       ###
       # POST /keys
+      #   Add new sshkey to known hosts
       # @param [String] key
       post '/keys' do
         act KeysController, :create
