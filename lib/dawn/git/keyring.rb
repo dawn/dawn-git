@@ -1,4 +1,5 @@
 require 'sshkey'
+require 'dawn/git/config'
 
 module Dawn
   module Git
@@ -24,6 +25,10 @@ module Dawn
 
       end
 
+      def self.config
+        Dawn::Git.config
+      end
+
       def self.parse_line(str)
         h,y,k = nil, nil, nil
         if matchdata = str.match(/(?<host>\S+)\s(?<keytype>\S+)\s(?<key>\S+)/)
@@ -45,7 +50,7 @@ module Dawn
       end
 
       def self.known_hosts_filename
-        File.expand_path(".ssh/known_hosts", Dir.home("git"))
+        File.expand_path(".ssh/known_hosts", Dir.home(config.repo_user))
       end
 
       def self.from_known_hosts
@@ -62,7 +67,7 @@ module Dawn
 
       def self.key?(key)
         # check known_hosts if the key exists
-        known_hosts.any? { |k| k.key == key }
+        known_hosts.any? { |k| k.key.include? key }
       end
 
       def self.add(key)
