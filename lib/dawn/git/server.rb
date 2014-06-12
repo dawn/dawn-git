@@ -31,6 +31,13 @@ module Dawn
       end
 
       ###
+      # GET /repos/:username/:reponame
+      #   Retrieve repo information
+      get '/repos/:username/:reponame' do
+        act ReposController, :get_repo
+      end
+
+      ###
       # POST /repos
       # @param [String] username
       # @param [String] reponame
@@ -46,13 +53,6 @@ module Dawn
       #   Creates a new repo
       post '/repos/:username' do
         act ReposController, :create
-      end
-
-      ###
-      # GET /repos/:username/:reponame
-      #   Retrieve repo information
-      get '/repos/:username/:reponame' do
-        act ReposController, :get_repo
       end
 
       ###
